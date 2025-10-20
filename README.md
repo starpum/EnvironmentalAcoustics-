@@ -1,2 +1,5 @@
 # Environmental Acoustics
-Python tools for environmental acoustics 
+
+Various tools for environmental acoustics. 
+
+Mostly focused aorund data extraction and manipulation.
