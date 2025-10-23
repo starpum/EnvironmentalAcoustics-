@@ -29,13 +29,31 @@ def ccorr(f):
     C = 20*np.log10(R)+0.06
     return C
 
+def plotFFT(x, t, NFFT, Fs):
+    fig, (ax1, ax2) = plt.subplots(nrows=2,sharex=True)
+    ax1.plot(t, x)
+    ax1.set_ylabel('Measured signal LAeq')
+    
+    Pxx, freqs, bins, im = ax2.specgram(x, NFFT=NFFT, Fs=Fs)
+    # The `specgram` method returns 4 objects. They are:
+    # - Pxx: the periodogram
+    # - freqs: the frequency vector
+    # - bins: the centers of the time bins
+    # - im: the .image.AxesImage instance representing the data in the plot
+    ax2.set_xlabel('Time (s)')
+    ax2.set_ylabel('Frequency (Hz)')
+    ax2.set_xlim(0, 3600)
+    
+    return(Pxx, freqs, bins, im)
+
+
 # main script 
 def main():
     t0 = time.time() 
 
     # Load first 5 lines from the sample SVAN file
     header_lines = []
-    with open("samplefile.txt", "r", encoding="utf-8") as f:
+    with open("Python Processing\samplefile.txt", "r", encoding="utf-8") as f:
         for _ in range(5):
             header_lines.append(f.readline().strip())
         
@@ -83,12 +101,12 @@ def main():
             TotalC = LcFreq.apply(logsum, axis=1)
             
             # Format time axis
-            formatted_time = pd.to_datetime(DateTime).strftime("%d/%m/%Y %H:%M:%S")
+            #formatted_time = pd.to_datetime(DateTime).strftime("%d/%m/%Y %H:%M:%S")
             
             # Output update, row by row, to populate the file with the extracted / computed data 
             rows = []
             for i in range(len(Num)):
-                #formatted_time = pd.to_datetime(DateTime.iloc[i]).strftime("%d/%m/%Y %H:%M:%S")
+                formatted_time = pd.to_datetime(DateTime.iloc[i]).strftime("%d/%m/%Y %H:%M:%S")
                 row = [str(Num.iloc[i]), formatted_time]
                 row += [str(val) for val in LzFreq.iloc[i, :]]
                 row += [str(TotalA.iloc[i]), str(TotalC.iloc[i]), str(TotalZ.iloc[i])]
@@ -96,8 +114,7 @@ def main():
             out.write('\n'.join(rows) + '\n')
             
             # Create and plot spectrogram
-            
-               
+            #plotFFT(TotalA)                          
         
         # Tik tok on the clock but the party won't stop 
         t1 = time.time()
