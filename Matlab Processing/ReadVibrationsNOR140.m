@@ -76,4 +76,22 @@ for par2 = 1:numel(files)
     end
     legend(legendCell);
     hold off
+
+    % Plot displacement datas 
+
+    % legendCell = cellstr(num2str(f'));
+    % xticks(index(1:300:end))
+    % xticklabels(datum(1:300:end))
+    % xtickangle(45)
+    % colormap jet
+    % title('Displacement')
+    % xlabel('date&time')
+    % ylabel('x [m]')
+    % hold on
+    % subplot(2,1,2)
+    % for i = 1:length(Disp)
+    %     plot((10^-3)*Disp(:,i));
+    % end
+    % legend(legendCell);
+    % hold off
 end 
