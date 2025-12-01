@@ -1,4 +1,4 @@
-clear all; close all;
+close all;
 
 foldername = './Datas';
 

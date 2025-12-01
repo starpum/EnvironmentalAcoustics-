@@ -1,0 +1,28 @@
+
+
+	To install the necessary libraries :
+
+sudo apt install apache2 libapache2-mod-wsgi-py3 python3-venv
+sudo apt-get install libportaudio2
+
+	Create the virtual environement for python and activate it
+
+python3 -m venv venv
+source venv/bin/activate
+
+	Install the requiered libraries for python :
+
+cd path/to/folder/requirements.txt
+pip install -r requirements.txt 
+
+	Setup the DHT sensor informations : 
+
+type sudo nano /boot/firmware/config.txt
+Just after the [ALL] add this line
+dtoverlay=dht11,gpiopin=21
+CTRL+X to save and exit, reboot the RPi
+Check that the sensor is working by running 
+cd /sys/bus/iio/devices 
+ls
+cd iio:device0
+ls

@@ -51,12 +51,15 @@ def plotFFT(x, t, NFFT, Fs):
 def main():
     t0 = time.time() 
 
-    # Load first 5 lines from the sample SVAN file
+    # Locate then load first 5 lines from the sample SVAN file
+    samplefile_dir = os.path.dirname(os.path.abspath(__file__))
+    samplefile_path = os.path.join(samplefile_dir, 'samplefile.txt')
+    
     header_lines = []
-    with open("Python Processing\samplefile.txt", "r", encoding="utf-8") as f:
+    with open(samplefile_path, "r", encoding="utf-8") as f:
         for _ in range(5):
             header_lines.append(f.readline().strip())
-        
+             
     # Output file intialisation
     output_file = "dagfile.txt"
         
@@ -86,6 +89,7 @@ def main():
             # Assign SVAN variables to the correct index in the DataFrame 
             Num = NoiseData["Address"]
             DateTime = NoiseData["Start Time"]
+            LAeq = NoiseData['Leq(Main)']
             LzFreq = NoiseData.loc[:,"20Hz":"20kHz"]
             LaFreq = LzFreq + acorr(freq)
             LcFreq = LzFreq + ccorr(freq)
@@ -107,7 +111,7 @@ def main():
             rows = []
             for i in range(len(Num)):
                 formatted_time = pd.to_datetime(DateTime.iloc[i]).strftime("%d/%m/%Y %H:%M:%S")
-                row = [str(Num.iloc[i]), formatted_time]
+                row = [str(Num.iloc[i]), formatted_time, str(LAeq.iloc[i])]
                 row += [str(val) for val in LzFreq.iloc[i, :]]
                 row += [str(TotalA.iloc[i]), str(TotalC.iloc[i]), str(TotalZ.iloc[i])]
                 rows.append('\t'.join(row))

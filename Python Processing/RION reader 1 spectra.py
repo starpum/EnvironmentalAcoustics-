@@ -51,12 +51,16 @@ def plotFFT(x, t, NFFT, Fs):
 def main():
     t0 = time.time() 
 
-    # Load first 5 lines from the sample SVAN file
+    # Locate then load first 5 lines from the sample SVAN file
+    samplefile_dir = os.path.dirname(os.path.abspath(__file__))
+    samplefile_path = os.path.join(samplefile_dir, 'samplefile.txt')
+    print(samplefile_path)
+    
     header_lines = []
-    with open("Python Processing\samplefile.txt", "r", encoding="utf-8") as f:
+    with open(samplefile_path, "r", encoding="utf-8") as f:
         for _ in range(5):
             header_lines.append(f.readline().strip())
-        
+             
     # Output file intialisation
     output_file = "dagfile.txt"
         
