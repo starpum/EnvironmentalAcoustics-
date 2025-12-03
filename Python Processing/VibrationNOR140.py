@@ -18,8 +18,9 @@ def load_overview_nor140(path, w):
     data = df.iloc[4:].reset_index(drop=True)  # skip header rows
     dt = pd.to_datetime(data[1].astype(str).str.strip("() "), format="%Y/%m/%d %H:%M:%S.%f", errors="raise")
     fmt = dt.dt.strftime("%d/%m/%Y %H:%M:%S.%f")
-    acc_dB = data.iloc[:, 7:33].astype(float).to_numpy()  # 26 bands up to 2 kHz
-    acc = 2*10**(-5)*10**(acc_dB/20)
+    #acc_dB = data.iloc[:, 7:33].astype(float).to_numpy()  # 26 bands up to 2 kHz
+    acc_dB = data.iloc[:, 7:20].astype(float).to_numpy()  # 26 bands up to 2 kHz
+    acc = (2*10**(-5))*10**(acc_dB/20)
     vel = (acc / w) 
     disp = (vel / (w**2)) * 1000 #conversion to mm
     return fmt, acc, disp, vel
@@ -37,7 +38,8 @@ def main():
 
     # Frequencies and angular frequency
     #all_freq = np.array([6.3, 8, 10, 12.5, 16, 20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500, 16000, 20000])
-    freq = np.array([6.3, 8, 10, 12.5, 16, 20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000])
+    #freq = np.array([6.3, 8, 10, 12.5, 16, 20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000])
+    freq = np.array([6.3, 8, 10, 12.5, 16, 20, 25, 31.5, 40, 50, 63, 80, 100])
     freq_corr = np.arange(8, 8 + (len(freq)-1) + 1) 
     real_freq = 10**(freq_corr/10)
     w = 2 * np.pi * real_freq

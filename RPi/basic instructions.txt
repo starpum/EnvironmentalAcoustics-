@@ -26,3 +26,13 @@ cd /sys/bus/iio/devices
 ls
 cd iio:device0
 ls
+
+
+	Change the environment variables (to setup so that the PROJECT-CONFIG points to the correct path) 
+	
+nano ~/.bashrc
+
+add at the end of the file 
+
+# Email env variables 
+export PROJECT_CONFIG="/home/acoustic/Documents/Mesures/project_config.json"
